@@ -161,12 +161,21 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $data = Admin::find($id);
-        if($data){
-            $data->delete();
-            return["message" => "Delete Ticket Success"];
-        }else{
-            return["message" => "Data Not Found"];
+        $ticket = Admin::whereId($id)->delete();
+
+        if($ticket)
+        {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tiket Berhasil Dihapus',
+                'data' => $ticket
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tiket Gagal Dihapus',
+                'data' => $ticket
+            ], 409);
         }
     }
 }

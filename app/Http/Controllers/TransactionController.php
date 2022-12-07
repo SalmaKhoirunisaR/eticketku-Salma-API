@@ -25,14 +25,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaction = Transaction::get();
+        $transactions = Transaction::get();
 
         return response()->json([
             'success' => true,
             'message' => 'List Semua Transaksi',
-            'data' => $transaction
+            'data' => $transactions
         ], 200);
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -153,15 +153,17 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaction $transaction)
     {
-        $transaction = Transaction::where('id', $id)->delete();
+        $transaction->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Berhasil Menghapus Data',
-            'data' => $transaction
-        ], 200);
+        if ($transaction) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi berhasil dihapus',
+                'data' => $transaction
+            ], 200);
+        }
     }
     
 }

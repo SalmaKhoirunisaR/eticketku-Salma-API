@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //public routes
     Route::post('logout', [UserController::class, 'logout']);
     Route::resource('ticket', AdminController::class, ['only' => ['index']]);
-    Route::resource('transaction', AdminController::class, ['only' => ['index']]);
+    Route::resource('transaction', TransactionController::class, ['only' => ['index']]);
     
     Route::middleware([UserCheck::class])->group(function () {
         Route::resource('transaction', TransactionController::class, ['only' => ['store']]);
@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware([AdminCheck::class])->group(function () {
         Route::resource('ticket', AdminController::class, ['only' => [ 'store', 'update', 'destroy', 'show']]);     
-        Route::resource('transaction', AdminController::class, ['only' => [ 'update', 'destroy', 'show']]);     
+        Route::resource('transaction', TransactionController::class, ['only' => [ 'update', 'destroy', 'show', 'index']]);     
     });
 
 
